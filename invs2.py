@@ -46,7 +46,6 @@ for rect in alien_rects:
     alien = {"rect":rect, "colour":alien_colour}
     aliens.append(alien)
 
-print aliens
 
 BLUE = Color('blue')
 RED = Color('red')
@@ -164,7 +163,6 @@ while True:
     for enemy_lazer in enemy_lazers:
         if enemy_lazer["rect"][1] > ROWS * ROWHEIGHT:
             enemy_lazers.remove(enemy_lazer)
-    print player_location
     pygame.display.update()
     main_clock.tick(FPS)
     counter +=1
