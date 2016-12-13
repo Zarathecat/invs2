@@ -70,6 +70,7 @@ def fire_lazer(player_location):
     lazer = {"rect":lazer_rect, "colour":lazer_colour}
     lazers.append(lazer)
 
+#once aliens can move, this should be rewritten so that it tracks them
 def make_enemy_lazer():
     shooters = [600] #hack so that doesn't crash if no aliens
     for alien in aliens:
@@ -97,11 +98,6 @@ while True:
     player_rect = pygame.Rect(player_location, ROWS*ROWHEIGHT - ROWHEIGHT, PLAYERSIZE*COLUMNWIDTH, PLAYERSIZE*COLUMNWIDTH)
     player = {"rect":player_rect, "colour":player_colour}
 
-    window_surface.fill(BLACK)
-    for alien in aliens:
-        pygame.draw.rect(window_surface, alien["colour"], alien["rect"])
-
-    pygame.draw.rect(window_surface, player["colour"], player["rect"])
 
     if aliens == []:
         print 'You win!'
@@ -136,13 +132,6 @@ while True:
     if counter % LAZERRATE == 0:
         make_enemy_lazer()
 
-    for enemy_lazer in enemy_lazers:
-        enemy_lazer["rect"][1] += ROWHEIGHT
-        pygame.draw.rect(window_surface, enemy_lazer["colour"], enemy_lazer["rect"])
-
-    for lazer in lazers:
-        lazer["rect"][1] -= ROWHEIGHT
-        pygame.draw.rect(window_surface, lazer["colour"], lazer["rect"])
 
     for lazer in lazers[:]:
         for alien in aliens[:]:
@@ -159,6 +148,22 @@ while True:
             print("You lose!")
             pygame.quit()
             sys.exit()
+
+    window_surface.fill(BLACK)
+    for alien in aliens:
+        pygame.draw.ellipse(window_surface, alien["colour"], alien["rect"])
+
+    pygame.draw.rect(window_surface, player["colour"], player["rect"])
+
+
+    for enemy_lazer in enemy_lazers:
+        enemy_lazer["rect"][1] += ROWHEIGHT
+        pygame.draw.rect(window_surface, enemy_lazer["colour"], enemy_lazer["rect"])
+
+    for lazer in lazers:
+        lazer["rect"][1] -= ROWHEIGHT
+        pygame.draw.rect(window_surface, lazer["colour"], lazer["rect"])
+
 
     for enemy_lazer in enemy_lazers:
         if enemy_lazer["rect"][1] > ROWS * ROWHEIGHT:
